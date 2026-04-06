@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>জীবন.কম - বাংলাদেশের সেরা ক্লাসিফাইড</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Hind Siliguri', sans-serif; background: #f1f5f9; min-height: 100vh; }
+header { background: linear-gradient(135deg, #1e3a5f, #2563eb); padding: 14px 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+.header-top { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+.logo { color: #fff; font-size: 24px; font-weight: 700; flex-shrink: 0; }
+.logo span { color: #facc15; }
+.search-box { flex: 1; display: flex; background: #fff; border-radius: 10px; overflow: hidden; }
+.search-box input { flex: 1; border: none; outline: none; padding: 10px 14px; font-size: 14px; font-family: inherit; }
+.search-btn { background: #facc15; border: none; padding: 0 16px; cursor: pointer; font-size: 16px; }
+.post-btn { background: #facc15; color: #1e3a5f; border: none; border-radius: 10px; padding: 10px 14px; font-weight: 700; font-size: 13px; cursor: pointer; flex-shrink: 0; font-family: inherit; }
+.nav-cats { max-width: 1100px; margin: 10px auto 0; display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; }
+.nav-cats::-webkit-scrollbar { display: none; }
+.cat-btn { background: rgba(255,255,255,0.15); color: #fff; border: none; border-radius: 20px; padding: 5px 12px; font-size: 12px; cursor: pointer; font-family: inherit; white-space: nowrap; transition: all 0.2s; }
+.cat-btn.active { background: #facc15; color: #1e3a5f; font-weight: 700; }
+.container { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
+.hero { background: linear-gradient(120deg, #1e3a5f, #2563eb); border-radius: 16px; padding: 28px; margin-bottom: 24px; color: #fff; display: flex; justify-content: space-between; align-items: center; }
+.hero h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.hero p { font-size: 14px; opacity: 0.85; margin-bottom: 16px; }
+.hero-btn { background: #facc15; color: #1e3a5f; border: none; border-radius: 10px; padding: 10px 20px; font-weight: 700; font-size: 14px; cursor: pointer; font-family: inherit; }
+.hero-emoji { font-size: 60px; opacity: 0.25; }
+.section-title { font-size: 17px; font-weight: 700; color: #1e3a5f; margin-bottom: 14px; }
+.cats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
+@media(min-width: 600px) { .cats-grid { grid-template-columns: repeat(8, 1fr); } }
+.cat-card { background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 14px 8px; cursor: pointer; text-align: center; transition: all 0.2s; }
+.cat-card:hover { border-color: #2563eb; transform: translateY(-2px); }
+.cat-card .icon { font-size: 26px; }
+.cat-card .name { font-size: 11px; font-weight: 600; color: #334155; margin-top: 5px; }
+.cat-card .count { font-size: 10px; color: #94a3b8; }
+.ads-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media(min-width: 600px) { .ads-grid { grid-template-columns: repeat(3, 1fr); } }
+@media(min-width: 900px) { .ads-grid { grid-template-columns: repeat(4, 1fr); } }
+.ad-card { background: #fff; border-radius: 14px; overflow: hidden; border: 1px solid #e2e8f0; cursor: pointer; transition: all 0.2s; }
+.ad-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+.ad-img { height: 120px; background: linear-gradient(135deg, #eff6ff, #dbeafe); display: flex; align-items: center; justify-content: center; font-size: 48px; position: relative; }
+.badge { position: absolute; top: 8px; left: 8px; color: #fff; font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 5px; }
+.ad-body { padding: 10px 12px; }
+.ad-title { font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 4px; line-height: 1.4; }
+.ad-price { font-size: 15px; font-weight: 700; color: #2563eb; margin-bottom: 6px; }
+.ad-meta { display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8; }
+footer { background: #1e3a5f; color: #94a3b8; text-align: center; padding: 18px; margin-top: 40px; font-size: 12px; }
+/* MODAL */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; padding: 16px; }
+.modal-overlay.open { display: flex; }
+.modal { background: #fff; border-radius: 20px; padding: 24px; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.modal-header h2 { font-size: 18px; font-weight: 700; color: #1e3a5f; }
+.close-btn { background: none; border: none; font-size: 20px; cursor: pointer; }
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 5px; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; border: 2px solid #e2e8f0; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; outline: none; transition: border-color 0.2s; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #2563eb; }
+.submit-btn { width: 100%; background: linear-gradient(135deg, #1e3a5f, #2563eb); color: #fff; border: none; border-radius: 12px; padding: 13px; font-weight: 700; font-size: 15px; cursor: pointer; font-family: inherit; margin-top: 4px; }
+.success-msg { text-align: center; padding: 40px 0; display: none; }
+.count-badge { font-size: 12px; color: #64748b; font-weight: 400; margin-left: 6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="logo"><span>জীবন</span>.কম</div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="কী খুঁজছেন? যেমন: iPhone, বাইক, ফ্ল্যাট..." oninput="filterAds()">
+      <button class="search-btn">🔍</button>
+    </div>
+    <button class="post-btn" onclick="openModal()">+ বিজ্ঞাপন দিন</button>
+  </div>
+  <div class="nav-cats" id="navCats"></div>
+</header>
+
+<div class="container">
+  <div class="hero" id="heroSection">
+    <div>
+      <h1>জীবন.কম — বাংলাদেশের সেরা ক্লাসিফাইড সাইট 🇧🇩</h1>
+      <p>লক্ষাধিক পণ্য, কোটি মানুষের বাজার</p>
+      <button class="hero-btn" onclick="openModal()">এখনই বিজ্ঞাপন দিন — সম্পূর্ণ ফ্রি!</button>
+    </div>
+    <div class="hero-emoji">🛒</div>
+  </div>
+
+  <div id="catsSection">
+    <div class="section-title">ক্যাটাগরি</div>
+    <div class="cats-grid" id="catsGrid"></div>
+  </div>
+
+  <div>
+    <div class="section-title" id="adsTitle">সাম্প্রতিক বিজ্ঞাপন <span class="count-badge" id="countBadge"></span></div>
+    <div class="ads-grid" id="adsGrid"></div>
+  </div>
+</div>
+
+<footer>© ২০২৫ জীবন.কম — বাংলাদেশের সেরা ক্লাসিফাইড মার্কেটপ্লেস 🇧🇩</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div id="formSection">
+      <div class="modal-header">
+        <h2>বিজ্ঞাপন দিন</h2>
+        <button class="close-btn" onclick="closeModal()">✕</button>
+      </div>
+      <div class="form-group"><label>পণ্যের নাম *</label><input id="fTitle" placeholder="যেমন: Samsung Galaxy S24"></div>
+      <div class="form-group"><label>দাম (৳) *</label><input id="fPrice" placeholder="যেমন: ৫০,০০০"></div>
+      <div class="form-group"><label>এলাকা *</label><input id="fLocation" placeholder="যেমন: ঢাকা, মিরপুর"></div>
+      <div class="form-group"><label>ফোন নম্বর</label><input id="fPhone" placeholder="০১XXXXXXXXX"></div>
+      <div class="form-group">
+        <label>ক্যাটাগরি *</label>
+        <select id="fCategory">
+          <option value="">ক্যাটাগরি বেছে নিন</option>
+          <option>ইলেকট্রনিক্স</option>
+          <option>গাড়ি/বাইক</option>
+          <option>বাড়ি/জমি</option>
+          <option>পোশাক</option>
+          <option>চাকরি</option>
+          <option>আসবাবপত্র</option>
+          <option>বই/শিক্ষা</option>
+          <option>পোষা প্রাণী</option>
+        </select>
+      </div>
+      <div class="form-group"><label>বিবরণ</label><textarea id="fDesc" rows="3" placeholder="পণ্যের বিস্তারিত লিখুন..."></textarea></div>
+      <button class="submit-btn" onclick="postAd()">বিজ্ঞাপন প্রকাশ করুন 🚀</button>
+    </div>
+    <div class="success-msg" id="successMsg">
+      <div style="font-size:52px">✅</div>
+      <div style="font-size:18px;font-weight:700;color:#1e3a5f;margin-top:12px">বিজ্ঞাপন দেওয়া হয়েছে!</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const categories = [
+  {icon:"📱",name:"ইলেকট্রনিক্স",count:1240},
+  {icon:"🚗",name:"গাড়ি/বাইক",count:892},
+  {icon:"🏠",name:"বাড়ি/জমি",count:654},
+  {icon:"👗",name:"পোশাক",count:438},
+  {icon:"💼",name:"চাকরি",count:320},
+  {icon:"🪑",name:"আসবাবপত্র",count:278},
+  {icon:"📚",name:"বই/শিক্ষা",count:195},
+  {icon:"🐾",name:"পোষা প্রাণী",count:143}
+];
+
+let ads = [
+  {title:"iPhone 14 Pro Max 256GB",price:"১,১০,০০০",location:"ঢাকা",time:"২ ঘন্টা আগে",category:"ইলেকট্রনিক্স",img:"📱",badge:"জরুরি",badgeColor:"#ef4444"},
+  {title:"Honda CB150R ২০২২",price:"১,৮৫,০০০",location:"চট্টগ্রাম",time:"৫ ঘন্টা আগে",category:"গাড়ি/বাইক",img:"🏍️",badge:"",badgeColor:""},
+  {title:"২ বেডরুম ফ্ল্যাট ভাড়া",price:"১৮,০০০/মাস",location:"সিলেট",time:"১ দিন আগে",category:"বাড়ি/জমি",img:"🏠",badge:"ফিচার্ড",badgeColor:"#f59e0b"},
+  {title:"Samsung 55\" 4K Smart TV",price:"৬৫,০০০",location:"রাজশাহী",time:"১ দিন আগে",category:"ইলেকট্রনিক্স",img:"📺",badge:"",badgeColor:""},
+  {title:"সফটওয়্যার ইঞ্জিনিয়ার চাই",price:"৪৫,০০০–৭০,০০০",location:"ঢাকা",time:"২ দিন আগে",category:"চাকরি",img:"💼",badge:"নতুন",badgeColor:"#10b981"},
+  {title:"টিক টক বার্মিজ বিড়াল",price:"১৫,০০০",location:"ঢাকা",time:"৩ দিন আগে",category:"পোষা প্রাণী",img:"🐱",badge:"",badgeColor:""},
+  {title:"সেগুন কাঠের খাট (King Size)",price:"৩৫,০০০",location:"কুমিল্লা",time:"৩ দিন আগে",category:"আসবাবপত্র",img:"🛏️",badge:"",badgeColor:""},
+  {title:"HSC ও Admission গাইড বই সেট",price:"২,৫০০",location:"ময়মনসিংহ",time:"৪ দিন আগে",category:"বই/শিক্ষা",img:"📚",badge:"",badgeColor:""}
+];
+
+let activeCategory = "সব";
+
+function init() {
+  // Nav cats
+  const navCats = document.getElementById('navCats');
+  ["সব", ...categories.map(c=>c.name)].forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn' + (cat === "সব" ? ' active' : '');
+    btn.textContent = cat;
+    btn.onclick = () => setCategory(cat);
+    navCats.appendChild(btn);
+  });
+
+  // Cats grid
+  const catsGrid = document.getElementById('catsGrid');
+  categories.forEach(cat => {
+    catsGrid.innerHTML += `<div class="cat-card" onclick="setCategory('${cat.name}')">
+      <div class="icon">${cat.icon}</div>
+      <div class="name">${cat.name}</div>
+      <div class="count">${cat.count}</div>
+    </div>`;
+  });
+
+  renderAds();
+}
+
+function setCategory(cat) {
+  activeCategory = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent === cat);
+  });
+  document.getElementById('heroSection').style.display = cat === 'সব' ? 'flex' : 'none';
+  document.getElementById('catsSection').style.display = cat === 'সব' ? 'block' : 'none';
+  document.getElementById('adsTitle').childNodes[0].textContent = cat === 'সব' ? 'সাম্প্রতিক বিজ্ঞাপন ' : cat + ' ';
+  renderAds();
+}
+
+function filterAds() { renderAds(); }
+
+function renderAds() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = ads.filter(ad => {
+    const matchSearch = !search || ad.title.toLowerCase().includes(search) || ad.location.includes(search);
+    const matchCat = activeCategory === 'সব' || ad.category === activeCategory;
+    return matchSearch && matchCat;
+  });
+  document.getElementById('countBadge').textContent = `(${filtered.length}টি)`;
+  const grid = document.getElementById('adsGrid');
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:50px;background:#fff;border-radius:16px"><div style="font-size:40px">😔</div><div style="color:#64748b;margin-top:10px">কোনো বিজ্ঞাপন পাওয়া যায়নি</div></div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(ad => `
+    <div class="ad-card">
+      <div class="ad-img">${ad.img}${ad.badge ? `<span class="badge" style="background:${ad.badgeColor}">${ad.badge}</span>` : ''}</div>
+      <div class="ad-body">
+        <div class="ad-title">${ad.title}</div>
+        <div class="ad-price">৳ ${ad.price}</div>
+        <div class="ad-meta"><span>📍 ${ad.location}</span><span>🕐 ${ad.time}</span></div>
+      </div>
+    </div>`).join('');
+}
+
+function openModal() { document.getElementById('modalOverlay').classList.add('open'); }
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+
+function postAd() {
+  const title = document.getElementById('fTitle').value;
+  const price = document.getElementById('fPrice').value;
+  const location = document.getElementById('fLocation').value;
+  const category = document.getElementById('fCategory').value;
+  if (!title || !price || !location || !category) { alert('সব * চিহ্নিত তথ্য দিন!'); return; }
+  ads.unshift({title, price, location, category, time:"এইমাত্র", img:"🏷️", badge:"নতুন", badgeColor:"#10b981"});
+  document.getElementById('formSection').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+  setTimeout(() => {
+    closeModal();
+    document.getElementById('formSection').style.display = 'block';
+    document.getElementById('successMsg').style.display = 'none';
+    document.getElementById('fTitle').value = '';
+    document.getElementById('fPrice').value = '';
+    document.getElementById('fLocation').value = '';
+    document.getElementById('fPhone').value = '';
+    document.getElementById('fCategory').value = '';
+    document.getElementById('fDesc').value = '';
+    renderAds();
+  }, 2000);
+}
+
+init();
+</script>
+</body>
+</html>
