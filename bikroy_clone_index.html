@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bikroy Clone - Jibon</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
+body{background:#f2f3f5;}
+header{background:#00a651;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-size:20px;font-weight:bold;}
+.post-btn{background:#fff;color:#00a651;padding:8px 12px;border:none;border-radius:5px;font-weight:bold;}
+.container{padding:10px;}
+.ads{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.card{background:#fff;border:1px solid #ddd;border-radius:6px;overflow:hidden;}
+.card img{width:100%;height:120px;object-fit:cover;}
+.card-body{padding:8px;}
+.title{font-size:13px;}
+.price{color:#00a651;font-weight:bold;}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;justify-content:center;align-items:center;}
+.modal-box{background:#fff;padding:15px;border-radius:10px;width:90%;}
+input,select{width:100%;padding:8px;margin:5px 0;}
+button{width:100%;padding:10px;background:#00a651;color:#fff;border:none;margin-top:5px;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Bikroy Clone</div>
+  <button class="post-btn" onclick="openModal()">+ Post</button>
+</header>
+<div class="container">
+  <div class="ads" id="ads"></div>
+</div>
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h3>Post Ad</h3>
+    <input id="title" placeholder="Product name">
+    <input id="price" placeholder="Price">
+    <input id="location" placeholder="Location">
+    <select id="category">
+      <option value="">Category</option>
+      <option>Mobile</option>
+      <option>Car</option>
+      <option>Bike</option>
+    </select>
+    <input type="file" id="image">
+    <button onclick="postAd()">Post</button>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+<script>
+let ads = [];
+function openModal(){document.getElementById('modal').style.display='flex';}
+function closeModal(){document.getElementById('modal').style.display='none';}
+function postAd(){
+  let title=document.getElementById('title').value;
+  let price=document.getElementById('price').value;
+  let location=document.getElementById('location').value;
+  let category=document.getElementById('category').value;
+  let file=document.getElementById('image').files[0];
+  if(!title||!price||!location||!category||!file){alert("সব fill কর!");return;}
+  let reader=new FileReader();
+  reader.onload=function(e){
+    ads.unshift({title,price,location,img:e.target.result});
+    render();
+  }
+  reader.readAsDataURL(file);
+  closeModal();
+}
+function render(){
+  let html="";
+  ads.forEach(ad=>{
+    html+=`
+    <div class="card">
+      <img src="${ad.img}">
+      <div class="card-body">
+        <div class="title">${ad.title}</div>
+        <div class="price">৳ ${ad.price}</div>
+        <div>${ad.location}</div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('ads').innerHTML=html;
+}
+render();
+</script>
+</body>
+</html>
