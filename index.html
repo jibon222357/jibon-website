@@ -3,86 +3,243 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bikroy Clone - Jibon</title>
+<title>Jibon.com - Bangladesh's Best Classifieds</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
-body{background:#f2f3f5;}
-header{background:#00a651;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;}
-.logo{font-size:20px;font-weight:bold;}
-.post-btn{background:#fff;color:#00a651;padding:8px 12px;border:none;border-radius:5px;font-weight:bold;}
-.container{padding:10px;}
-.ads{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
-.card{background:#fff;border:1px solid #ddd;border-radius:6px;overflow:hidden;}
-.card img{width:100%;height:120px;object-fit:cover;}
-.card-body{padding:8px;}
-.title{font-size:13px;}
-.price{color:#00a651;font-weight:bold;}
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;justify-content:center;align-items:center;}
-.modal-box{background:#fff;padding:15px;border-radius:10px;width:90%;}
-input,select{width:100%;padding:8px;margin:5px 0;}
-button{width:100%;padding:10px;background:#00a651;color:#fff;border:none;margin-top:5px;}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #f1f5f9; min-height: 100vh; }
+header { background: linear-gradient(135deg, #1e3a5f, #2563eb); padding: 14px 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+.header-top { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+.logo { color: #fff; font-size: 24px; font-weight: 700; flex-shrink: 0; }
+.logo span { color: #facc15; }
+.search-box { flex: 1; display: flex; background: #fff; border-radius: 10px; overflow: hidden; }
+.search-box input { flex: 1; border: none; outline: none; padding: 10px 14px; font-size: 14px; font-family: inherit; }
+.search-btn { background: #facc15; border: none; padding: 0 16px; cursor: pointer; font-size: 16px; }
+.post-btn { background: #facc15; color: #1e3a5f; border: none; border-radius: 10px; padding: 10px 14px; font-weight: 700; font-size: 13px; cursor: pointer; flex-shrink: 0; font-family: inherit; }
+.nav-cats { max-width: 1100px; margin: 10px auto 0; display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; }
+.nav-cats::-webkit-scrollbar { display: none; }
+.cat-btn { background: rgba(255,255,255,0.15); color: #fff; border: none; border-radius: 20px; padding: 5px 12px; font-size: 12px; cursor: pointer; font-family: inherit; white-space: nowrap; transition: all 0.2s; }
+.cat-btn.active { background: #facc15; color: #1e3a5f; font-weight: 700; }
+.container { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
+.hero { background: linear-gradient(120deg, #1e3a5f, #2563eb); border-radius: 16px; padding: 28px; margin-bottom: 24px; color: #fff; display: flex; justify-content: space-between; align-items: center; }
+.hero h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.hero p { font-size: 14px; opacity: 0.85; margin-bottom: 16px; }
+.hero-btn { background: #facc15; color: #1e3a5f; border: none; border-radius: 10px; padding: 10px 20px; font-weight: 700; font-size: 14px; cursor: pointer; font-family: inherit; }
+.hero-emoji { font-size: 60px; opacity: 0.25; }
+.section-title { font-size: 17px; font-weight: 700; color: #1e3a5f; margin-bottom: 14px; }
+.cats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
+@media(min-width: 600px) { .cats-grid { grid-template-columns: repeat(8, 1fr); } }
+.cat-card { background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 14px 8px; cursor: pointer; text-align: center; transition: all 0.2s; }
+.cat-card:hover { border-color: #2563eb; transform: translateY(-2px); }
+.cat-card .icon { font-size: 26px; }
+.cat-card .name { font-size: 11px; font-weight: 600; color: #334155; margin-top: 5px; }
+.cat-card .count { font-size: 10px; color: #94a3b8; }
+.ads-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media(min-width: 600px) { .ads-grid { grid-template-columns: repeat(3, 1fr); } }
+@media(min-width: 900px) { .ads-grid { grid-template-columns: repeat(4, 1fr); } }
+.ad-card { background: #fff; border-radius: 14px; overflow: hidden; border: 1px solid #e2e8f0; cursor: pointer; transition: all 0.2s; }
+.ad-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+.ad-img { height: 120px; background: linear-gradient(135deg, #eff6ff, #dbeafe); display: flex; align-items: center; justify-content: center; font-size: 48px; position: relative; }
+.badge { position: absolute; top: 8px; left: 8px; color: #fff; font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 5px; }
+.ad-body { padding: 10px 12px; }
+.ad-title { font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 4px; line-height: 1.4; }
+.ad-price { font-size: 15px; font-weight: 700; color: #2563eb; margin-bottom: 6px; }
+.ad-meta { display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8; }
+footer { background: #1e3a5f; color: #94a3b8; text-align: center; padding: 18px; margin-top: 40px; font-size: 12px; }
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; padding: 16px; }
+.modal-overlay.open { display: flex; }
+.modal { background: #fff; border-radius: 20px; padding: 24px; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.modal-header h2 { font-size: 18px; font-weight: 700; color: #1e3a5f; }
+.close-btn { background: none; border: none; font-size: 20px; cursor: pointer; }
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 5px; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; border: 2px solid #e2e8f0; border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: inherit; outline: none; transition: border-color 0.2s; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #2563eb; }
+.submit-btn { width: 100%; background: linear-gradient(135deg, #1e3a5f, #2563eb); color: #fff; border: none; border-radius: 12px; padding: 13px; font-weight: 700; font-size: 15px; cursor: pointer; font-family: inherit; margin-top: 4px; }
+.success-msg { text-align: center; padding: 40px 0; display: none; }
+.count-badge { font-size: 12px; color: #64748b; font-weight: 400; margin-left: 6px; }
 </style>
 </head>
 <body>
+
 <header>
-  <div class="logo">Bikroy Clone</div>
-  <button class="post-btn" onclick="openModal()">+ Post</button>
+  <div class="header-top">
+    <div class="logo"><span>Jibon</span>.com</div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="What are you looking for? e.g. iPhone, bike, apartment..." oninput="filterAds()">
+      <button class="search-btn">🔍</button>
+    </div>
+    <button class="post-btn" onclick="openModal()">+ Post Ad</button>
+  </div>
+  <div class="nav-cats" id="navCats"></div>
 </header>
+
 <div class="container">
-  <div class="ads" id="ads"></div>
-</div>
-<div class="modal" id="modal">
-  <div class="modal-box">
-    <h3>Post Ad</h3>
-    <input id="title" placeholder="Product name">
-    <input id="price" placeholder="Price">
-    <input id="location" placeholder="Location">
-    <select id="category">
-      <option value="">Category</option>
-      <option>Mobile</option>
-      <option>Car</option>
-      <option>Bike</option>
-    </select>
-    <input type="file" id="image">
-    <button onclick="postAd()">Post</button>
-    <button onclick="closeModal()">Close</button>
+  <div class="hero" id="heroSection">
+    <div>
+      <h1>Jibon.com — Bangladesh's Best Classified Site 🇧🇩</h1>
+      <p>Millions of products, millions of people's marketplace</p>
+      <button class="hero-btn" onclick="openModal()">Post Your Ad Now — 100% Free!</button>
+    </div>
+    <div class="hero-emoji">🛒</div>
+  </div>
+
+  <div id="catsSection">
+    <div class="section-title">Categories</div>
+    <div class="cats-grid" id="catsGrid"></div>
+  </div>
+
+  <div>
+    <div class="section-title" id="adsTitle">Recent Ads <span class="count-badge" id="countBadge"></span></div>
+    <div class="ads-grid" id="adsGrid"></div>
   </div>
 </div>
-<script>
-let ads = [];
-function openModal(){document.getElementById('modal').style.display='flex';}
-function closeModal(){document.getElementById('modal').style.display='none';}
-function postAd(){
-  let title=document.getElementById('title').value;
-  let price=document.getElementById('price').value;
-  let location=document.getElementById('location').value;
-  let category=document.getElementById('category').value;
-  let file=document.getElementById('image').files[0];
-  if(!title||!price||!location||!category||!file){alert("সব fill কর!");return;}
-  let reader=new FileReader();
-  reader.onload=function(e){
-    ads.unshift({title,price,location,img:e.target.result});
-    render();
-  }
-  reader.readAsDataURL(file);
-  closeModal();
-}
-function render(){
-  let html="";
-  ads.forEach(ad=>{
-    html+=`
-    <div class="card">
-      <img src="${ad.img}">
-      <div class="card-body">
-        <div class="title">${ad.title}</div>
-        <div class="price">৳ ${ad.price}</div>
-        <div>${ad.location}</div>
+
+<footer>© 2025 Jibon.com — Bangladesh's Best Classified Marketplace 🇧🇩</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div id="formSection">
+      <div class="modal-header">
+        <h2>Post an Ad</h2>
+        <button class="close-btn" onclick="closeModal()">✕</button>
       </div>
+      <div class="form-group"><label>Product Name *</label><input id="fTitle" placeholder="e.g. Samsung Galaxy S24"></div>
+      <div class="form-group"><label>Price (BDT) *</label><input id="fPrice" placeholder="e.g. 50,000"></div>
+      <div class="form-group"><label>Location *</label><input id="fLocation" placeholder="e.g. Dhaka, Mirpur"></div>
+      <div class="form-group"><label>Phone Number</label><input id="fPhone" placeholder="01XXXXXXXXX"></div>
+      <div class="form-group">
+        <label>Category *</label>
+        <select id="fCategory">
+          <option value="">Select a category</option>
+          <option>Electronics</option>
+          <option>Cars & Bikes</option>
+          <option>Property</option>
+          <option>Clothing</option>
+          <option>Jobs</option>
+          <option>Furniture</option>
+          <option>Books & Education</option>
+          <option>Pets</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Description</label><textarea id="fDesc" rows="3" placeholder="Write details about your product..."></textarea></div>
+      <button class="submit-btn" onclick="postAd()">Publish Ad 🚀</button>
+    </div>
+    <div class="success-msg" id="successMsg">
+      <div style="font-size:52px">✅</div>
+      <div style="font-size:18px;font-weight:700;color:#1e3a5f;margin-top:12px">Ad Posted Successfully!</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const categories = [
+  {icon:"📱",name:"Electronics",count:1240},
+  {icon:"🚗",name:"Cars & Bikes",count:892},
+  {icon:"🏠",name:"Property",count:654},
+  {icon:"👗",name:"Clothing",count:438},
+  {icon:"💼",name:"Jobs",count:320},
+  {icon:"🪑",name:"Furniture",count:278},
+  {icon:"📚",name:"Books & Education",count:195},
+  {icon:"🐾",name:"Pets",count:143}
+];
+
+let ads = [
+  {title:"iPhone 14 Pro Max 256GB",price:"110,000",location:"Dhaka",time:"2 hours ago",category:"Electronics",img:"📱",badge:"Urgent",badgeColor:"#ef4444"},
+  {title:"Honda CB150R 2022",price:"185,000",location:"Chittagong",time:"5 hours ago",category:"Cars & Bikes",img:"🏍️",badge:"",badgeColor:""},
+  {title:"2 Bedroom Apartment for Rent",price:"18,000/month",location:"Sylhet",time:"1 day ago",category:"Property",img:"🏠",badge:"Featured",badgeColor:"#f59e0b"},
+  {title:'Samsung 55" 4K Smart TV',price:"65,000",location:"Rajshahi",time:"1 day ago",category:"Electronics",img:"📺",badge:"",badgeColor:""},
+  {title:"Software Engineer Wanted",price:"45,000–70,000",location:"Dhaka",time:"2 days ago",category:"Jobs",img:"💼",badge:"New",badgeColor:"#10b981"},
+  {title:"Burmese Cat for Sale",price:"15,000",location:"Dhaka",time:"3 days ago",category:"Pets",img:"🐱",badge:"",badgeColor:""},
+  {title:"Teak Wood King Size Bed",price:"35,000",location:"Comilla",time:"3 days ago",category:"Furniture",img:"🛏️",badge:"",badgeColor:""},
+  {title:"HSC & Admission Guide Book Set",price:"2,500",location:"Mymensingh",time:"4 days ago",category:"Books & Education",img:"📚",badge:"",badgeColor:""}
+];
+
+let activeCategory = "All";
+
+function init() {
+  const navCats = document.getElementById('navCats');
+  ["All", ...categories.map(c=>c.name)].forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn' + (cat === "All" ? ' active' : '');
+    btn.textContent = cat;
+    btn.onclick = () => setCategory(cat);
+    navCats.appendChild(btn);
+  });
+  const catsGrid = document.getElementById('catsGrid');
+  categories.forEach(cat => {
+    catsGrid.innerHTML += `<div class="cat-card" onclick="setCategory('${cat.name}')">
+      <div class="icon">${cat.icon}</div>
+      <div class="name">${cat.name}</div>
+      <div class="count">${cat.count}</div>
     </div>`;
   });
-  document.getElementById('ads').innerHTML=html;
+  renderAds();
 }
-render();
+
+function setCategory(cat) {
+  activeCategory = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.textContent === cat));
+  document.getElementById('heroSection').style.display = cat === 'All' ? 'flex' : 'none';
+  document.getElementById('catsSection').style.display = cat === 'All' ? 'block' : 'none';
+  document.getElementById('adsTitle').childNodes[0].textContent = cat === 'All' ? 'Recent Ads ' : cat + ' ';
+  renderAds();
+}
+
+function filterAds() { renderAds(); }
+
+function renderAds() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = ads.filter(ad => {
+    const matchSearch = !search || ad.title.toLowerCase().includes(search) || ad.location.toLowerCase().includes(search);
+    const matchCat = activeCategory === 'All' || ad.category === activeCategory;
+    return matchSearch && matchCat;
+  });
+  document.getElementById('countBadge').textContent = `(${filtered.length})`;
+  const grid = document.getElementById('adsGrid');
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:50px;background:#fff;border-radius:16px"><div style="font-size:40px">😔</div><div style="color:#64748b;margin-top:10px">No ads found</div></div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(ad => `
+    <div class="ad-card">
+      <div class="ad-img">${ad.img}${ad.badge ? `<span class="badge" style="background:${ad.badgeColor}">${ad.badge}</span>` : ''}</div>
+      <div class="ad-body">
+        <div class="ad-title">${ad.title}</div>
+        <div class="ad-price">৳ ${ad.price}</div>
+        <div class="ad-meta"><span>📍 ${ad.location}</span><span>🕐 ${ad.time}</span></div>
+      </div>
+    </div>`).join('');
+}
+
+function openModal() { document.getElementById('modalOverlay').classList.add('open'); }
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+
+function postAd() {
+  const title = document.getElementById('fTitle').value;
+  const price = document.getElementById('fPrice').value;
+  const location = document.getElementById('fLocation').value;
+  const category = document.getElementById('fCategory').value;
+  if (!title || !price || !location || !category) { alert('Please fill all required (*) fields!'); return; }
+  ads.unshift({title, price, location, category, time:"Just now", img:"🏷️", badge:"New", badgeColor:"#10b981"});
+  document.getElementById('formSection').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+  setTimeout(() => {
+    closeModal();
+    document.getElementById('formSection').style.display = 'block';
+    document.getElementById('successMsg').style.display = 'none';
+    document.getElementById('fTitle').value='';
+    document.getElementById('fPrice').value='';
+    document.getElementById('fLocation').value='';
+    document.getElementById('fPhone').value='';
+    document.getElementById('fCategory').value='';
+    document.getElementById('fDesc').value='';
+    renderAds();
+  }, 2000);
+}
+
+init();
 </script>
 </body>
 </html>
