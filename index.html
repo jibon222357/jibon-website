@@ -124,10 +124,6 @@ footer { background: #1e3a5f; color: #94a3b8; text-align: center; padding: 18px;
         </select>
       </div>
       <div class="form-group"><label>Description</label><textarea id="fDesc" rows="3" placeholder="Write details about your product..."></textarea></div>
-      <div class="form-group">
-        <label>Upload Photo *</label>
-        <input type="file" id="fImage" accept="image/*">
-      </div>
       <button class="submit-btn" onclick="postAd()">Publish Ad 🚀</button>
     </div>
     <div class="success-msg" id="successMsg">
@@ -208,7 +204,7 @@ function renderAds() {
   }
   grid.innerHTML = filtered.map(ad => `
     <div class="ad-card">
-      <div class="ad-img">${ad.img.startsWith('data:image') ? `<img src="${ad.img}" style="width:100%;height:100%;object-fit:cover;">` : ad.img}${ad.badge ? `<span class="badge" style="background:${ad.badgeColor}">${ad.badge}</span>` : ''}</div>
+      <div class="ad-img">${ad.img}${ad.badge ? `<span class="badge" style="background:${ad.badgeColor}">${ad.badge}</span>` : ''}</div>
       <div class="ad-body">
         <div class="ad-title">${ad.title}</div>
         <div class="ad-price">৳ ${ad.price}</div>
@@ -225,35 +221,7 @@ function postAd() {
   const price = document.getElementById('fPrice').value;
   const location = document.getElementById('fLocation').value;
   const category = document.getElementById('fCategory').value;
-  const imageInput = document.getElementById('fImage');
-
-  if (!title || !price || !location || !category || imageInput.files.length === 0) {
-    alert('Please fill all required fields + add image!');
-    return;
-  }
-
-  const file = imageInput.files[0];
-  const reader = new FileReader();
-
-  reader.onload = function(e) {
-    const imageData = e.target.result;
-
-    ads.unshift({
-      title,
-      price,
-      location,
-      category,
-      time: "Just now",
-      img: imageData,
-      badge: "New",
-      badgeColor: "#10b981"
-    });
-
-    showSuccess();
-  };
-
-  reader.readAsDataURL(file);
-}
+  if (!title || !price || !location || !category) { alert('Please fill all required (*) fields!'); return; }
   ads.unshift({title, price, location, category, time:"Just now", img:"🏷️", badge:"New", badgeColor:"#10b981"});
   document.getElementById('formSection').style.display = 'none';
   document.getElementById('successMsg').style.display = 'block';
@@ -267,27 +235,6 @@ function postAd() {
     document.getElementById('fPhone').value='';
     document.getElementById('fCategory').value='';
     document.getElementById('fDesc').value='';
-    renderAds();
-  }, 2000);
-}
-
-function showSuccess() {
-  document.getElementById('formSection').style.display = 'none';
-  document.getElementById('successMsg').style.display = 'block';
-
-  setTimeout(() => {
-    closeModal();
-    document.getElementById('formSection').style.display = 'block';
-    document.getElementById('successMsg').style.display = 'none';
-
-    document.getElementById('fTitle').value='';
-    document.getElementById('fPrice').value='';
-    document.getElementById('fLocation').value='';
-    document.getElementById('fPhone').value='';
-    document.getElementById('fCategory').value='';
-    document.getElementById('fDesc').value='';
-    document.getElementById('fImage').value='';
-
     renderAds();
   }, 2000);
 }
